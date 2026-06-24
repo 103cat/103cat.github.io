@@ -1,8 +1,5 @@
-[SG track and Field Results.html](https://github.com/user-attachments/files/29286527/SG.track.and.Field.Results.html)
-<Hi Friends!>
-<!-- saved from url=(0068)file:///C:/Users/T1390292A/Downloads/track_field_explorer%20(2).html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en"><head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SG Track &amp; Field — Results Explorer</title>
 <style>
@@ -204,14 +201,14 @@ td.muted{color:var(--muted);font-size:13px}
       <table id="resultsTable">
         <thead>
           <tr>
-            <th onclick="sortBy(&#39;Competitor Name&#39;)" data-col="Competitor Name">Athlete <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;School&#39;)" data-col="School">School <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;Year&#39;)" data-col="Year">Year <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;Event&#39;)" data-col="Event">Event <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;Age/Division Category&#39;)" data-col="Age/Division Category">Cat <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;Round&#39;)" data-col="Round">Round <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;Result&#39;)" data-col="Result">Result <span class="sort-arrow">↕</span></th>
-            <th onclick="sortBy(&#39;Position&#39;)" data-col="Position">Pos <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Competitor Name')" data-col="Competitor Name">Athlete <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('School')" data-col="School">School <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Year')" data-col="Year">Year <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Event')" data-col="Event">Event <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Age/Division Category')" data-col="Age/Division Category">Cat <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Round')" data-col="Round">Round <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Result')" data-col="Result">Result <span class="sort-arrow">↕</span></th>
+            <th onclick="sortBy('Position')" data-col="Position">Pos <span class="sort-arrow">↕</span></th>
           </tr>
         </thead>
         <tbody id="tableBody"><tr class="">
