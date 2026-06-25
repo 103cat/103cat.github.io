@@ -1,4 +1,4 @@
-<Hi Friends!:)>
+<Hi Friends!>
 <!-- saved from url=(0068)file:///C:/Users/T1390292A/Downloads/track_field_explorer%20(2).html -->
 <html lang="en">
     <head>
@@ -537,12 +537,28 @@
                 }
             }
 
-            /* Column filter row */
+            .visitor-counter {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 11px;
+                color: rgba(255,255,255,.55);
+                font-family: 'Barlow Condensed', sans-serif;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+                white-space: nowrap;
+                border-left: 1px solid rgba(255,255,255,.15);
+                padding-left: 14px;
+                margin-left: 6px;
+            }
+            .visitor-icon {
+                font-size: 12px;
+                opacity: .75;
+            }
             .col-filter-row th {
                 padding: 4px 8px 8px;
                 background: #ffffff;
             }
-
             .col-filter-row input {
                 width: 100%;
                 background: #f5f5f5;
@@ -555,15 +571,8 @@
                 outline: none;
                 transition: border-color .15s;
             }
-
-            .col-filter-row input:focus {
-                border-color: #C8102E;
-            }
-
-            .col-filter-row input::placeholder {
-                color: #aaa;
-                font-size: 11px;
-            }
+            .col-filter-row input:focus { border-color: #C8102E; }
+            .col-filter-row input::placeholder { color: #aaa; font-size: 11px; }
         </style>
     </head>
     <body>
@@ -571,9 +580,12 @@
             <div class="logo">
                 SG Track <span>&amp;</span>
                 Field
-            
             </div>
             <div class="header-stat" id="headerStat">25,167 results · 10,344 athletes</div>
+            <div class="visitor-counter" id="visitorCounter">
+                <span class="visitor-icon">👁</span>
+                <span id="visitorCount">—</span>
+            </div>
         </header>
         <div class="layout">
             <!-- Sidebar filters -->
@@ -615,6 +627,8 @@
                         <option value="Secondary">Secondary</option>
                     </select>
                 </div>
+                
+                
                 <div class="sidebar-section">
                     <span class="sidebar-title">Round</span>
                     <select id="roundFilter">
@@ -675,30 +689,14 @@
                                 </th>
                             </tr>
                             <tr class="col-filter-row" id="colFilterRow">
-                                <th>
-                                    <input type="text" id="cf_name" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_school" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_year" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_event" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_cat" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_round" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_result" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
-                                <th>
-                                    <input type="text" id="cf_pos" placeholder="Filter…" oninput="colFilterChanged()">
-                                </th>
+                                <th><input type="text" id="cf_name"   placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_school" placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_year"   placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_event"  placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_cat"    placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_round"  placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_result" placeholder="Filter…" oninput="colFilterChanged()"></th>
+                                <th><input type="text" id="cf_pos"    placeholder="Filter…" oninput="colFilterChanged()"></th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -2070,64 +2068,38 @@
                 document.getElementById('eventFilter')?.value && (document.getElementById('eventFilter').value = '');
                 document.getElementById('roundFilter').value = '';
                 // Clear column filters
-                ['cf_name', 'cf_school', 'cf_year', 'cf_event', 'cf_cat', 'cf_round', 'cf_result', 'cf_pos'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el)
-                        el.value = '';
-                }
-                );
-                colFilters = {
-                    name: [],
-                    school: [],
-                    year: [],
-                    event: [],
-                    cat: [],
-                    round: [],
-                    result: [],
-                    pos: []
-                };
+                ['cf_name','cf_school','cf_year','cf_event','cf_cat','cf_round','cf_result','cf_pos']
+                    .forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+                colFilters = { name:[], school:[], year:[], event:[], cat:[], round:[], result:[], pos:[] };
                 crOnly = false;
                 document.getElementById('crToggle').classList.remove('on');
                 document.getElementById('crToggleInput').checked = false;
                 applyFilters();
             }
 
+
             // ── Column filters ────────────────────────────────────────────────────────────
-            let colFilters = {
-                name: [],
-                school: [],
-                year: [],
-                event: [],
-                cat: [],
-                round: [],
-                result: [],
-                pos: []
-            };
+            let colFilters = { name:[], school:[], year:[], event:[], cat:[], round:[], result:[], pos:[] };
             let colDebounce;
 
             function colFilterChanged() {
                 const tok = s => s.trim().toLowerCase().split(/\s+/).filter(Boolean);
                 colFilters = {
-                    name: tok(document.getElementById('cf_name').value),
+                    name:   tok(document.getElementById('cf_name').value),
                     school: tok(document.getElementById('cf_school').value),
-                    year: tok(document.getElementById('cf_year').value),
-                    event: tok(document.getElementById('cf_event').value),
-                    cat: tok(document.getElementById('cf_cat').value),
-                    round: tok(document.getElementById('cf_round').value),
+                    year:   tok(document.getElementById('cf_year').value),
+                    event:  tok(document.getElementById('cf_event').value),
+                    cat:    tok(document.getElementById('cf_cat').value),
+                    round:  tok(document.getElementById('cf_round').value),
                     result: tok(document.getElementById('cf_result').value),
-                    pos: tok(document.getElementById('cf_pos').value),
+                    pos:    tok(document.getElementById('cf_pos').value),
                 };
                 clearTimeout(colDebounce);
-                colDebounce = setTimeout( () => {
-                    page = 1;
-                    renderTable();
-                }
-                , 180);
+                colDebounce = setTimeout(() => { page = 1; renderTable(); }, 180);
             }
 
             function colMatch(tokens, value) {
-                if (!tokens.length)
-                    return true;
+                if (!tokens.length) return true;
                 const v = String(value || '').toLowerCase();
                 return tokens.every(t => v.includes(t));
             }
@@ -2135,28 +2107,18 @@
             function applyColFilters(rows) {
                 const cf = colFilters;
                 const hasAny = Object.values(cf).some(v => v.length);
-                if (!hasAny)
-                    return rows;
+                if (!hasAny) return rows;
                 return rows.filter(r => {
-                    if (!colMatch(cf.name, r['Competitor Name']))
-                        return false;
-                    if (!colMatch(cf.school, r['School']))
-                        return false;
-                    if (!colMatch(cf.year, r['Year']))
-                        return false;
-                    if (!colMatch(cf.event, r['Event']))
-                        return false;
-                    if (!colMatch(cf.cat, r['Age/Division Category']))
-                        return false;
-                    if (!colMatch(cf.round, r['Round']))
-                        return false;
-                    if (!colMatch(cf.result, r['Result']))
-                        return false;
-                    if (!colMatch(cf.pos, r['Position']))
-                        return false;
+                    if (!colMatch(cf.name,   r['Competitor Name']))        return false;
+                    if (!colMatch(cf.school, r['School']))                 return false;
+                    if (!colMatch(cf.year,   r['Year']))                   return false;
+                    if (!colMatch(cf.event,  r['Event']))                  return false;
+                    if (!colMatch(cf.cat,    r['Age/Division Category']))   return false;
+                    if (!colMatch(cf.round,  r['Round']))                  return false;
+                    if (!colMatch(cf.result, r['Result']))                 return false;
+                    if (!colMatch(cf.pos,    r['Position']))               return false;
                     return true;
-                }
-                );
+                });
             }
 
             // ── Sort ─────────────────────────────────────────────────────────────────────
@@ -2337,7 +2299,19 @@
             );
             ['compFilter', 'yearFilter', 'levelFilter', 'roundFilter'].forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
 
-            // ── Init ─────────────────────────────────────────────────────────────────────
+            // ── Visitor counter ───────────────────────────────────────────────────────
+            (function() {
+                try {
+                    let count = parseInt(localStorage.getItem('sgTFVisits') || '0', 10);
+                    count += 1;
+                    localStorage.setItem('sgTFVisits', count);
+                    document.getElementById('visitorCount').textContent = count.toLocaleString() + ' visit' + (count !== 1 ? 's' : '');
+                } catch(e) {
+                    document.getElementById('visitorCounter').style.display = 'none';
+                }
+            })();
+
+────
             document.getElementById('loadingBar').classList.add('active');
             loadData();
         </script>
