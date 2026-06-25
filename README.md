@@ -1,4 +1,5 @@
-[Uploading track_field_explore<!DOCTYPE html>
+[Uploading track_field_explorer_v3 (1).html…]()
+<!DOCTYPE html>
 <!-- saved from url=(0068)file:///C:/Users/T1390292A/Downloads/track_field_explorer%20(2).html -->
 <html lang="en">
     <head>
@@ -537,24 +538,7 @@
                 }
             }
 
-            .visitor-counter {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                font-size: 11px;
-                color: rgba(255,255,255,.55);
-                font-family: 'Barlow Condensed', sans-serif;
-                letter-spacing: .06em;
-                text-transform: uppercase;
-                white-space: nowrap;
-                border-left: 1px solid rgba(255,255,255,.15);
-                padding-left: 14px;
-                margin-left: 6px;
-            }
-            .visitor-icon {
-                font-size: 12px;
-                opacity: .75;
-            }
+            /* Column filter row */
             .col-filter-row th {
                 padding: 4px 8px 8px;
                 background: #ffffff;
@@ -582,10 +566,6 @@
                 Field
             </div>
             <div class="header-stat" id="headerStat">25,167 results · 10,344 athletes</div>
-            <div class="visitor-counter" id="visitorCounter">
-                <span class="visitor-icon">👁</span>
-                <span id="visitorCount">—</span>
-            </div>
         </header>
         <div class="layout">
             <!-- Sidebar filters -->
@@ -640,9 +620,8 @@
                 </div>
                 <div class="sidebar-section">
                     <span class="sidebar-title">Records</span>
-                    <label class="toggle-row" for="crToggleInput">
-                        <input type="checkbox" id="crToggleInput" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none" onchange="toggleCR()">
-                        <div class="toggle" id="crToggle"></div>
+                    <label class="toggle-row">
+                        <div class="toggle" id="crToggle" onclick="toggleCR()"></div>
                         <span class="toggle-label">Championship Records only</span>
                     </label>
                 </div>
@@ -1993,7 +1972,6 @@
             function toggleCR() {
                 crOnly = !crOnly;
                 document.getElementById('crToggle').classList.toggle('on', crOnly);
-                document.getElementById('crToggleInput').checked = crOnly;
             }
 
             // ── Filter ───────────────────────────────────────────────────────────────────
@@ -2073,7 +2051,6 @@
                 colFilters = { name:[], school:[], year:[], event:[], cat:[], round:[], result:[], pos:[] };
                 crOnly = false;
                 document.getElementById('crToggle').classList.remove('on');
-                document.getElementById('crToggleInput').checked = false;
                 applyFilters();
             }
 
@@ -2299,22 +2276,9 @@
             );
             ['compFilter', 'yearFilter', 'levelFilter', 'roundFilter'].forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
 
-            // ── Visitor counter ───────────────────────────────────────────────────────
-            (function() {
-                try {
-                    let count = parseInt(localStorage.getItem('sgTFVisits') || '0', 10);
-                    count += 1;
-                    localStorage.setItem('sgTFVisits', count);
-                    document.getElementById('visitorCount').textContent = count.toLocaleString() + ' visit' + (count !== 1 ? 's' : '');
-                } catch(e) {
-                    document.getElementById('visitorCounter').style.display = 'none';
-                }
-            })();
-
-────
+            // ── Init ─────────────────────────────────────────────────────────────────────
             document.getElementById('loadingBar').classList.add('active');
             loadData();
         </script>
     </body>
 </html>
-r_v3.html…]()
